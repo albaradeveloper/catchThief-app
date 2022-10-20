@@ -1,6 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'component/IostumTextFromField.dart';
+import 'component/valid.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -10,8 +14,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String? selectedValue;
-  List<String> itmms = ['Male', 'Female'];
+   TextEditingController email = TextEditingController();
+   TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +29,9 @@ class _SignUpState extends State<SignUp> {
             Padding(
               padding: const EdgeInsets.only(top: 60.0,bottom: 40.0),
               child: Center(
-                child:   Container(
+                child:   SizedBox(
                     width: 250,
                     height: 200,
-                    /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
                     child: Image.asset('images/signup.png')),
               ),
             ),
@@ -42,48 +44,15 @@ class _SignUpState extends State<SignUp> {
            const SizedBox(
               height: 30.0,
             ),
-          const  Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
-              ),
-            ),
-             const  Padding(
-              padding: EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
-               
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'User Name',
-                    hintText: 'Enter User Name'),
-              ),
-            ),
-             const  Padding(
-              padding: EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
-                
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Phone',
-                    hintText: 'Enter Phone Number'),
-              ),
-            ),
-          const  Padding(
-              padding: EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
-              ),
-            ),
+           CostumTextFromField(hint: "Email",icon: const Icon(Icons.email),controller:email ,valid: (val) {
+                        return vaildInput(val!, 3, 10);
+                      }),
+           CostumTextFromField(hint: "UserName",icon:const Icon(Icons.person),controller: username,valid: (val) {
+                        return vaildInput(val!, 3, 10);
+                      }),
+           CostumTextFromField(hint: "Password",icon:const Icon(Icons.password),controller: password,valid: (val) {
+                        return vaildInput(val!, 3, 10);
+                      }),
            const SizedBox( height: 30,),
             Container(
               height: 50,
@@ -93,6 +62,13 @@ class _SignUpState extends State<SignUp> {
               child: ElevatedButton(
                           onPressed: () {}, child: const Text('SIGNUP'))
             ),
+           const SizedBox(height: 20,),
+                    InkWell(
+                     onTap: () => Get.toNamed('/loginPage'),
+                      child: const Text(
+                        " LogIn",
+                        style: TextStyle(color: Colors.cyan),
+                      ),)
           ],
         ),
       ),

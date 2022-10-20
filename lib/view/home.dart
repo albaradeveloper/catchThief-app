@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:udomy/view/component/IostumTextFromField.dart';
+
+import 'component/valid.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,13 +12,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final TextEditingController search = TextEditingController();
+  final TextEditingController serial = TextEditingController();
+  final TextEditingController color = TextEditingController();
+  final TextEditingController company = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal[100],
       appBar: AppBar(
-         title:const Text("AGBOD 9"),
-         centerTitle: true,
+        title: const Text("AGBOD 9"),
+        centerTitle: true,
         backgroundColor: Colors.teal[100],
         elevation: 0.0,
       ),
@@ -28,15 +35,14 @@ class _HomeState extends State<Home> {
               arrowColor: Colors.amber,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.teal,
-                
                 child: Text("AO"),
               ),
             ),
             ListTile(
               title: Text(
                 'Profile',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.teal),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
               ),
               leading: Icon(
                 Icons.person,
@@ -46,8 +52,8 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text(
                 'My Devices',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.teal),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
               ),
               leading: Icon(
                 Icons.phone_iphone_sharp,
@@ -57,8 +63,8 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text(
                 'Contact Me',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.teal),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
               ),
               leading: Icon(
                 Icons.contact_support_outlined,
@@ -69,8 +75,8 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text(
                 'Setting',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.teal),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
               ),
               leading: Icon(
                 Icons.settings_outlined,
@@ -83,8 +89,8 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text(
                 'LogOut',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.teal),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
               ),
               leading: Icon(
                 Icons.logout_outlined,
@@ -96,8 +102,7 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-        Get.defaultDialog(
-               
+          Get.defaultDialog(
               title: "ADD YOUR PHONE",
               backgroundColor: Colors.teal,
               titleStyle: const TextStyle(color: Colors.white),
@@ -110,59 +115,43 @@ class _HomeState extends State<Home> {
               barrierDismissible: false,
               radius: 50,
               content: Column(
-                children: const [
-                  Padding(
-                  padding: EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 15, bottom: 0),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        labelText: 'Seruial Number',
-                        hintText: 'Enter Seruial Number '),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 15, bottom: 0),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        
-                        labelText: 'Device Name',
-                        hintText: 'Enter Device Name'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 15, bottom: 0),
-                  child: TextField(
-                    obscureText: true,
-                    
-                    decoration: InputDecoration(
-                        labelText: 'Color',
-                        hintText: 'Enter Device Color'),
-                  ),
-                ),
-                  
+                children:  [
+                 CostumTextFromField(
+              hint: "Serisl Number",
+              icon: const Icon(Icons.mobile_friendly),
+              controller: serial,
+              valid: (val) {
+                return vaildInput(val!, 3, 10);
+              }),
+                  CostumTextFromField(
+              hint: "Company",
+              icon: const Icon(Icons.brightness_auto_outlined),
+              controller: company,
+              valid: (val) {
+                return vaildInput(val!, 3, 10);
+              }),
+                  CostumTextFromField(
+              hint: "Color",
+              icon: const Icon(Icons.color_lens),
+              controller: color,
+              valid: (val) {
+                return vaildInput(val!, 3, 10);
+              })
                 ],
-              )
-            );
-
+              ));
         },
         child: const Icon(Icons.add),
       ),
-      body: const Padding(
-                  padding: EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 15, bottom: 0),
-                  child: TextField(
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        icon: Icon(Icons.search),
-                        labelText: 'Search',
-                        hintText: 'Enter Your Seriual Number'),
-                  ),
-                ),
+      body: Padding(
+          padding: const EdgeInsets.only(
+              left: 15.0, right: 15.0, top: 15, bottom: 0),
+          child: CostumTextFromField(
+              hint: "Search",
+              icon: const Icon(Icons.search),
+              controller: search,
+              valid: (val) {
+                return vaildInput(val!, 3, 10);
+              })),
     );
   }
 }
